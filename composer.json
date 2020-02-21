@@ -1,7 +1,7 @@
 {
-	"name": "wp-media/package-template",
-	"description": "Repository template for our packages",
-	"homepage": "https://github.com/wp-media/package-template",
+	"name": "wp-media/background-processing",
+	"description": "Async & Background Tasks Processing",
+	"homepage": "https://github.com/wp-media/background-processing",
 	"license": "GPL-2.0+",
 	"authors": [
 		{
@@ -15,8 +15,8 @@
 		"sort-packages": true
 	},
 	"support": {
-		"issues": "https://github.com/wp-media/package-template/issues",
-		"source": "https://github.com/wp-media/package-template"
+		"issues": "https://github.com/wp-media/background-processing/issues",
+		"source": "https://github.com/wp-media/background-processing"
 	},
 	"require-dev": {
 		"php": "^5.6 || ^7",
@@ -25,9 +25,11 @@
 		"phpcompatibility/phpcompatibility-wp": "^2.0",
 		"phpunit/phpunit": "^5.7 || ^7",
 		"wp-coding-standards/wpcs": "^2",
-		"wp-media/phpunit": "dev-master"
+		"wp-media/phpunit": "^1.0"
 	},
-	"autoload": {},
+	"autoload": {
+		"classmap": [ "" ]
+	},
 	"autoload-dev": {},
 	"scripts": {
 		"test-unit": "\"vendor/bin/wpmedia-phpunit\" unit path=Tests/Unit",
