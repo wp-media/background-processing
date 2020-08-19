@@ -13,7 +13,6 @@ branches:
   - develop
 cache:
   directories:
-  - vendor
   - $HOME/.composer/cache
 matrix:
   fast_finish: true
@@ -32,11 +31,21 @@ matrix:
   - name: Coding Standards
     php: 7.3
     env: WP_TRAVISCI=phpcs
+  - name: Static Analysis
+    php: 7.4
+    env: WP_TRAVISCI=phpstan
+  allow_failures:
+  - name: Static Analysis
+    php: 7.4
+    env: WP_TRAVISCI=phpstan
 before_install:
   # Unless we need XDebug, disable it for improved performance.
-  - phpenv config-rm xdebug.ini || return 0
-  - rm composer.lock
+  - phpenv config-rm xdebug.ini || true
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - |
+    if [[ -f composer.lock ]] ; then
+      rm composer.lock
+    fi
   - composer remove --dev phpstan/phpstan szepeviktor/phpstan-wordpress
 install:
   - composer install --prefer-dist --no-interaction
@@ -49,6 +58,9 @@ script:
 - |
   if [[ "$WP_TRAVISCI" == "phpcs" ]]; then
     composer phpcs
+  elif [[ "$WP_TRAVISCI" == "phpstan" ]]; then
+    composer require --dev szepeviktor/phpstan-wordpress
+    vendor/bin/phpstan analyze
   else
     composer run-tests
   fi
