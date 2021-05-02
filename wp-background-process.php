@@ -330,7 +330,7 @@ abstract class WP_Background_Process extends WP_Async_Request {
 			if ( ! empty( $batch->data ) && ! $this->is_process_cancelled() ) {
 				$this->update( $batch->key, $batch->data );
 			} else {
-				$this->complete_patch();
+				$this->complete_batch();
 				$this->delete( $batch->key );
 			}
 		} while ( ! $this->time_exceeded() && ! $this->memory_exceeded() && ! $this->is_queue_empty() && ! $this->is_process_cancelled() );
@@ -408,9 +408,9 @@ abstract class WP_Background_Process extends WP_Async_Request {
 	}
 
 	/**
-	 * Current patch is completed.
+	 * Current batch is completed.
 	 */
-	protected function complete_patch(){
+	protected function complete_batch(){
 		// Override this code on the instantiated process class just if needed.
 	}
 
