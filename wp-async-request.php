@@ -54,7 +54,7 @@ abstract class WP_Async_Request {
 	 * Initiate new async request
 	 */
 	public function __construct() {
-		$this->identifier = $this->prefix . '_' . $this->action;
+		$this->identifier = $this->prefix . '_' . $this->action . '_' . get_current_blog_id();
 
 		add_action( 'wp_ajax_' . $this->identifier, array( $this, 'maybe_handle' ) );
 		add_action( 'wp_ajax_nopriv_' . $this->identifier, array( $this, 'maybe_handle' ) );
