@@ -61,7 +61,7 @@ abstract class WP_Async_Request {
 	 * Initiate new async request
 	 */
 	public function __construct() {
-		$this->identifier = $this->prefix . '_' . $this->action;
+		$this->identifier = $this->prefix . '_' . $this->action . '_' . get_current_blog_id();
 		$this->hooks();
 	}
 
