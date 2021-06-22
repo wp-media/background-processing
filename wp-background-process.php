@@ -162,19 +162,19 @@ abstract class WP_Background_Process extends WP_Async_Request {
 
 		if ( $this->is_process_running() ) {
 			// Background process already running.
-			wp_die();
+			return $this->send_or_die();
 		}
 
 		if ( $this->is_queue_empty() ) {
 			// No data to process.
-			wp_die();
+			return $this->send_or_die();
 		}
 
-		check_ajax_referer( $this->identifier, 'nonce' );
+		$this->check_nonce();
 
 		$this->handle();
 
-		wp_die();
+		return $this->send_or_die();
 	}
 
 	/**
@@ -344,7 +344,7 @@ abstract class WP_Background_Process extends WP_Async_Request {
 			$this->complete();
 		}
 
-		wp_die();
+		return $this->send_or_die();
 	}
 
 	/**
@@ -524,5 +524,4 @@ abstract class WP_Background_Process extends WP_Async_Request {
 	 * @return mixed
 	 */
 	abstract protected function task( $item );
-
 }
